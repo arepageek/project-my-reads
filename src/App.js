@@ -51,7 +51,7 @@ class BooksApp extends React.Component {
               )
             )
             //Update books_search
-            this.setState({books_search:books_search})
+          this.setState({books_search:books_search})
           }else{
             this.setState({books_search:[]})
           }

@@ -1,20 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {PropTypes} from 'prop-types';
 import {Link} from 'react-router-dom';
+import BookItem from './BookItem';
 
 
-class BookList extends Component {
-
-    static propTypes={
-        bookList: PropTypes.array.isRequired,
-        updateBook: PropTypes.func.isRequired
-    }
-
-    render() {
-        const {bookList,updateBook} = this.props
+const BookList = (props) => {
+        const {bookList,updateBook} = props
         const currentlyReading = bookList.filter((book) => book.shelf ==='currentlyReading')
         const read = bookList.filter((book) => book.shelf ==='read')
-        const wantToRead = bookList.filter((book) => book.shelf ==='wantToRead')        
+        const wantToRead = bookList.filter((book) => book.shelf ==='wantToRead') 
         return (
           <div className="list-books">
             <div className="list-books-title">
@@ -28,28 +22,10 @@ class BookList extends Component {
                   <div className="bookshelf-books">
                     <ol className="books-grid">
                     {currentlyReading.map((book) => 
-                      <li key={book.id}>
-                        <div className="book">
-                          <div className="book-top">
-                            <div className="book-cover" style={{ 
-                                width: 128, 
-                                height: 193, 
-                                backgroundImage: `url(${book.imageLinks.thumbnail})`
-                             }}></div>
-                            <div className="book-shelf-changer">
-                              <select value={book.shelf} onChange={(event)=> updateBook(book,event.target.value)}>
-                                <option value="none">Move to...</option>
-                                <option value="currentlyReading">Currently Reading</option>
-                                <option value="wantToRead">Want to Read</option>
-                                <option value="read">Read</option>
-                                <option value="none">None</option>
-                              </select>
-                            </div>
-                          </div>
-                          <div className="book-title">{book.title}</div>
-                       <div className="book-authors">{book.authors[0]}</div>
-                        </div>
-                      </li>
+                            <BookItem
+                            book={book}
+                            updateBook={updateBook}
+                            />
                     )}
                     </ol>
                   </div>
@@ -61,28 +37,10 @@ class BookList extends Component {
                   <div className="bookshelf-books">
                     <ol className="books-grid">
                     {wantToRead.map((book) => 
-                      <li key={book.id}>
-                        <div className="book">
-                          <div className="book-top">
-                            <div className="book-cover" style={{ 
-                                width: 128, 
-                                height: 193, 
-                                backgroundImage: `url(${book.imageLinks.thumbnail})`
-                             }}></div>
-                            <div className="book-shelf-changer">
-                              <select value={book.shelf} onChange={(event)=> updateBook(book,event.target.value)}>
-                                <option value="none">Move to...</option>
-                                <option value="currentlyReading">Currently Reading</option>
-                                <option value="wantToRead">Want to Read</option>
-                                <option value="read">Read</option>
-                                <option value="none">None</option>
-                              </select>
-                            </div>
-                          </div>
-                          <div className="book-title">{book.title}</div>
-                       <div className="book-authors">{book.authors[0]}</div>
-                        </div>
-                      </li>
+                            <BookItem
+                            book={book}
+                            updateBook={updateBook}
+                            />
                     )}
                     </ol>
                   </div>
@@ -94,28 +52,10 @@ class BookList extends Component {
                   <div className="bookshelf-books">
                     <ol className="books-grid">
                     {read.map((book) => 
-                      <li key={book.id}>
-                        <div className="book">
-                          <div className="book-top">
-                            <div className="book-cover" style={{ 
-                                width: 128, 
-                                height: 193, 
-                                backgroundImage: `url(${book.imageLinks.thumbnail})`
-                             }}></div>
-                            <div className="book-shelf-changer">
-                              <select value={book.shelf} onChange={(event)=> updateBook(book,event.target.value)}>
-                                <option value="none">Move to...</option>
-                                <option value="currentlyReading">Currently Reading</option>
-                                <option value="wantToRead">Want to Read</option>
-                                <option value="read">Read</option>
-                                <option value="none">None</option>
-                              </select>
-                            </div>
-                          </div>
-                          <div className="book-title">{book.title}</div>
-                       <div className="book-authors">{book.authors[0]}</div>
-                        </div>
-                      </li>
+                           <BookItem
+                            book={book}
+                            updateBook={updateBook}
+                            />
                     )}
                     </ol>
                   </div>
@@ -128,7 +68,9 @@ class BookList extends Component {
             </div>
           </div>
         );
-    }
 }
-
+BookList.propTypes={
+    bookList: PropTypes.array.isRequired,
+    updateBook: PropTypes.func.isRequired
+}
 export default BookList;
